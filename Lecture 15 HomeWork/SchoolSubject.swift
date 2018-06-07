@@ -11,7 +11,7 @@ import RealmSwift
 class SchoolSubject: Object {
     
     @objc dynamic var subjectName: String = ""
-    @objc dynamic var amountOfTime: UInt = 0
+    @objc dynamic var amountOfTime: Int = 0
     
     var schoolKid: List<Schoolkid> = List<Schoolkid>()
     
