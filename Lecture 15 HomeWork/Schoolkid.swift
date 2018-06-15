@@ -9,8 +9,10 @@
 import RealmSwift
 
 class Schoolkid: Object {
+    
+    
     @objc dynamic var name: String = ""
-    @objc dynamic var dateOfLastVisit: String = ""
+    @objc dynamic var dateOfLastVisit: Int = Int(Date().timeIntervalSince1970)
     
     @objc dynamic var owner: SchoolSubject?
 }
