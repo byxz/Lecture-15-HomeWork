@@ -14,8 +14,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //let date = Date()
-        
         let schoolSubject1 = SchoolSubject()
         schoolSubject1.subjectName = "Математика"
         schoolSubject1.amountOfTime = 10
@@ -31,44 +29,62 @@ class ViewController: UIViewController {
         let schoolKid1 = Schoolkid()
         schoolKid1.name = "Коля"
         schoolKid1.dateOfLastVisit = 1525132800 //1 мая
-        schoolKid1.owner = schoolSubject1
+        
         
         let schoolKid2 = Schoolkid()
         schoolKid2.name = "Вова"
         schoolKid2.dateOfLastVisit = 1528761600 // 14 июня
-        schoolKid2.owner = schoolSubject2
+        
         
         let schoolKid3 = Schoolkid()
         schoolKid3.name = "Евгений"
         schoolKid3.dateOfLastVisit = 1528588800 // 10 июня
-        schoolKid3.owner = schoolSubject2
+        
         
         schoolSubject1.schoolKid.append(objectsIn: [schoolKid1,schoolKid2,schoolKid3])
-        schoolSubject2.schoolKid.append(objectsIn: [schoolKid1,schoolKid2,schoolKid3])
-        schoolSubject3.schoolKid.append(objectsIn: [schoolKid1,schoolKid2])
+        schoolSubject2.schoolKid.append(objectsIn: [schoolKid1,schoolKid2])
+        schoolSubject3.schoolKid.append(objectsIn: [schoolKid1])
+        schoolKid1.schoolSubject.append(objectsIn: [schoolSubject1])
+        schoolKid2.schoolSubject.append(objectsIn: [schoolSubject1])
+        schoolKid3.schoolSubject.append(objectsIn: [schoolSubject1,schoolSubject2,schoolSubject3])
         
         
         let realm = try! Realm()
         //try! realm.write {
-            //realm.deleteAll()
-            //realm.add([schoolSubject1,schoolSubject2,schoolSubject3])
-            
-            
-            
-            //Работает!
-            //let thirdTask = realm.objects(Schoolkid.self).filter("name = 'Евгений'")
-            //realm.delete(thirdTask)
-            
-       // }
+        //realm.deleteAll()
+        //realm.add([schoolSubject1,schoolSubject2,schoolSubject3,schoolKid1,schoolKid2,schoolKid3])
+        
+        
+        
+        //Работает!
+        //let thirdTask = realm.objects(Schoolkid.self).filter("name = 'Евгений'")
+        //realm.delete(thirdTask)
+        //}
         
 
-    
-        let firstTask = realm.objects(SchoolSubject.self).filter("dateOfLastVisit >= '1528588700' AND owner.@count > '1'")
-        print(firstTask)
-        let secondTask = realm.objects(Schoolkid.self).filter("ownre max")
+         
+         //Найти всех учеников, которые не посещали школу неделю и имеют хотя бы один предмет.
+         let firstTask = realm.objects(Schoolkid.self).filter("dateOfLastVisit >= 1528588700 AND schoolSubject.@count > 1")
+         print(firstTask)
+        
+        
+        
+        //Самый загруженый ученик, возможно их будет несколько.
+        let numberOfLines = realm.objects(Schoolkid.self).count
+        let object = realm.objects(Schoolkid.self)
+        let a = Array(object)
+        
+        var b = 0
+        
+        for i in 0..<numberOfLines {
+            if b < a[i].schoolSubject.count {
+                b = a[i].schoolSubject.count
+            }
+        }
+        let secondTask = realm.objects(Schoolkid.self).filter("schoolSubject.@count = \(b)")
         print(secondTask)
         
-        
+
         
     }
 }
