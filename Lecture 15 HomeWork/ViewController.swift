@@ -61,30 +61,26 @@ class ViewController: UIViewController {
         //realm.delete(thirdTask)
         //}
         
+        
+        
+        //Найти всех учеников, которые не посещали школу неделю и имеют хотя бы один предмет.
+        let firstTask = realm.objects(Schoolkid.self).filter("dateOfLastVisit >= 1528588700 AND schoolSubject.@count > 1")
+        print(firstTask)
+        
+        
+        
+        //Самый загруженый ученик.
 
-         
-         //Найти всех учеников, которые не посещали школу неделю и имеют хотя бы один предмет.
-         let firstTask = realm.objects(Schoolkid.self).filter("dateOfLastVisit >= 1528588700 AND schoolSubject.@count > 1")
-         print(firstTask)
         
+        let secondTask = realm.objects(Schoolkid.self)
+        let max = secondTask.max(by: )
         
-        
-        //Самый загруженый ученик, возможно их будет несколько.
-        let numberOfLines = realm.objects(Schoolkid.self).count
-        let object = realm.objects(Schoolkid.self)
-        let a = Array(object)
-        
-        var b = 0
-        
-        for i in 0..<numberOfLines {
-            if b < a[i].schoolSubject.count {
-                b = a[i].schoolSubject.count
-            }
-        }
-        let secondTask = realm.objects(Schoolkid.self).filter("schoolSubject.@count = \(b)")
+        print("======1")
         print(secondTask)
+        print("======2")
+        print(max)
+        print("======3")
         
-
         
     }
 }
