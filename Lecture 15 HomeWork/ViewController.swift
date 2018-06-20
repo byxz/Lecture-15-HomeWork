@@ -70,17 +70,30 @@ class ViewController: UIViewController {
         
         
         //Самый загруженый ученик.
+        let children = realm.objects(Schoolkid.self)
+        let childrenArray = Array(children)
+        let childrenFirst = childrenArray.first?.schoolSubject.count
+        var max = 0
+        
+        for i in childrenArray {
+            if childrenFirst! < i.schoolSubject.count {
+               max = i.schoolSubject.count
+            }
+            
+        }
+        
+        let childrenMax = children.filter("schoolSubject.@count = \(max)")
+        print(childrenMax)
+    
+        //Посчитать общее количество часов по предметам для каждого такого ученика отдельно и в общем.
+        
+        let sumHours = Array(realm.objects(SchoolSubject.self)) //.reduce(0, { ($0 + $1)})
+        var sum = 0
+        for i in sumHours {
+            sum += i.amountOfTime
+        }
+        print(sum)
 
-        
-        let secondTask = realm.objects(Schoolkid.self)
-        let max = secondTask.max(by: )
-        
-        print("======1")
-        print(secondTask)
-        print("======2")
-        print(max)
-        print("======3")
-        
         
     }
 }
